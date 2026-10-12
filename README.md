@@ -16,13 +16,3 @@ This project adheres to a standard trunk-based development and feature-branching
 * **Feature Branches:** New features (like the health check) are developed on isolated branches (e.g., `feature/health-check`).
 * **Pull Requests:** Code is integrated back into the primary branch via GitHub Pull Requests to simulate code review and automated checks.
 * **Environment Protection:** A `.gitignore` file is strictly enforced to prevent sensitive `.env` files, `node_modules/`, and `*.log` files from polluting the repository.
-
-## 🚨 Production Challenge: Ghost Files & Disk Space
-During this arc, we tackled a critical production incident: **Filesystem usage at 100%**. 
-A common trap is deleting massive log files, only to see disk space remain unchanged. We proved that if a running process still has a deleted file open, the kernel will not release the storage blocks. 
-
-**Our resolution framework:**
-1. Checked space and inode utilization (`df -h` and `df -i`).
-2. Identified high-growth areas (`du`).
-3. Used `lsof +L1` to find "ghost" files (deleted files still held open by active processes).
-4. Restarted or reloaded the holding processes to safely free the disk space.
